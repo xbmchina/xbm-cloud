@@ -1,0 +1,4 @@
+# Project exclude paths
+/xbm-eureka/target/
+/xbm-goods-service/target/
+/xbm-order-service/target/

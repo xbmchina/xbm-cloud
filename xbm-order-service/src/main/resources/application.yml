@@ -22,3 +22,22 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+#    lease-expiration-duration-in-seconds: 60  #续约过期时间
+#    lease-renewal-interval-in-seconds: 10 #发送心跳间隔
+feign:
+#  #文件压缩
+#  compression:
+#    request:
+#      enabled: true
+#      min-request-size: 512
+#      mime-types: text/xml,application/json
+  #日志输出
+  client:
+    config:
+      service-goods:
+        loggerLevel: FULL
+
+
+logging:
+  level:
+    cn.xbmchina.order.service.GoodsService: debug
