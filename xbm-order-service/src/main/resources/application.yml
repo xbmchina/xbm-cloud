@@ -36,8 +36,12 @@ feign:
     config:
       service-goods:
         loggerLevel: FULL
+  hystrix:
+    enabled: true
+
 
 
 logging:
   level:
     cn.xbmchina.order.service.GoodsService: debug
+
