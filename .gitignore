@@ -2,3 +2,7 @@
 /xbm-eureka/target/
 /xbm-goods-service/target/
 /xbm-order-service/target/
+*.iml
+*/target
+.idea
+.gitignore
