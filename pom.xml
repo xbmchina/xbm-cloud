@@ -12,6 +12,7 @@
         <module>xbm-goods-service</module>
         <module>xbm-order-service</module>
         <module>xbm-eureka</module>
+        <module>xbm-account</module>
     </modules>
 
     <parent>

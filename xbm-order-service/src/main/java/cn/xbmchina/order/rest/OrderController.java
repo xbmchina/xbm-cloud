@@ -4,6 +4,7 @@ import cn.xbmchina.order.entity.Order;
 import cn.xbmchina.order.model.vo.GoodsVo;
 import cn.xbmchina.order.service.GoodsService;
 import cn.xbmchina.order.service.OrderService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,18 @@ public class OrderController {
         return orderService.findById(id);
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public String save(@RequestBody Order order){
+    @GlobalTransactional
+    @RequestMapping(value = "/save",method = RequestMethod.GET)
+    public String save(){
+        System.out.println("12s1df2asdf454445");
+        Order order = new Order();
+        order.setGoodId(1L);
+        order.setOrderDesc("嘎嘎十多个");
+        order.setUserName("xbm");
+        order.setPrice(12);
+        order.setStatus("已支付");
         orderService.save(order);
+        System.out.println("success..........");
          return "success";
     }
 

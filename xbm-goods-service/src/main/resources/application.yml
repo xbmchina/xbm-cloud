@@ -5,18 +5,18 @@ spring:
     name: service-goods
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://115.159.2.165:3306/xbm_cloud?serverTimezone=GMT&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://115.159.2.165:3306/xbm_cloud_2?serverTimezone=GMT&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8
     username: root
-    password: Xbm@123456
+    password: Xbm@1233*
   jpa:
     database: mysql
     show-sql: true
     open-in-view: true
-  cloud:
-    sentinel:
-      transport:
-        port: 8719
-        dashboard: localhost:8080
+#  cloud:
+#    sentinel:
+#      transport:
+#        port: 8719
+#        dashboard: localhost:8080
 
 eureka:
   client:
@@ -27,3 +27,66 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+
+
+
+#seata配置
+seata:
+  enabled: true
+  application-id: service-goods
+  tx-service-group: service-goods_tx_group
+  enable-auto-data-source-proxy: true
+  use-jdk-proxy: false
+  client:
+    rm:
+      async-commit-buffer-limit: 1000
+      report-retry-count: 5
+      table-meta-check-enable: false
+      report-success-enable: false
+      saga-branch-register-enable: false
+      lock:
+        retry-interval: 10
+        retry-times: 30
+        retry-policy-branch-rollback-on-conflict: true
+
+    tm:
+      commit-retry-count: 5
+      rollback-retry-count: 5
+    undo:
+      data-validation: true
+      log-serialization: jackson
+
+    log:
+      exception-rate: 100
+  service:
+    vgroup-mapping:
+      service-goods_tx_group: default
+    #    grouplist:
+    #      defalut: ${service-goods.seata.service.grouplist.default}
+    enable-degrade: false
+    disable-global-transaction: false
+
+  transport:
+    shutdown:
+      wait: 3
+    thread-factory:
+      boss-thread-prefix: NettyBoss
+      worker-thread-prefix: NettyServerNIOWorker
+      server-executor-thread-prefix: NettyServerBizHandler
+      share-boss-worker: false
+      client-selector-thread-prefix: NettyClientSelector
+      client-selector-thread-size: 1
+      client-worker-thread-prefix: NettyClientWorkerThread
+      worker-thread-size: default
+      boss-thread-size: 1
+    type: TCP
+    server: NIO
+    heartbeat: true
+    serialization: seata
+    compressor: none
+    enable-client-batch-send-request: true
+
+  config:
+    type: file
+  registry:
+    type: file

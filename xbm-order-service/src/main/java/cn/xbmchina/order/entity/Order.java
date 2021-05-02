@@ -2,9 +2,7 @@ package cn.xbmchina.order.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -12,11 +10,12 @@ import javax.persistence.Table;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long goodId;
     private String status;
     private Integer price;
     private String orderDesc;
-    private String username;
+    private String userName;
 
 }
