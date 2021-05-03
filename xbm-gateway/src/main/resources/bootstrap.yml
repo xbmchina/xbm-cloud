@@ -1,0 +1,20 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      server-addr: 115.159.2.165:8848
+      config:
+        username: nacos
+        password: nacos
+        enabled: true
+        encode: UTF-8
+        timeout: 60000
+        namespace: xbm-cloud
+      discovery:
+        enabled: true
+        heart-beat-interval: 60000
+        namespace: xbm-cloud

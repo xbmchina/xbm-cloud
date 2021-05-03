@@ -1,0 +1,25 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: service-goods
+  cloud:
+    nacos:
+      server-addr: 115.159.2.165:8848
+      config:
+        username: nacos
+        password: nacos
+        enabled: true
+        encode: UTF-8
+        timeout: 60000
+        namespace: xbm-cloud
+        group: DEFAULT_GROUP
+        extension-configs:
+          - data-id: db-mysql.yml
+            group: DEFAULT_GROUP
+            refresh: true
+      discovery:
+        enabled: true
+        heart-beat-interval: 60000
+        namespace: xbm-cloud
