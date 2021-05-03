@@ -12,6 +12,11 @@
     <artifactId>xbm-account</artifactId>
 
     <dependencies>
+        <!--Spring boot Web容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- 用于连接mysql的相关依赖 -->
         <dependency>
             <groupId>mysql</groupId>

@@ -33,4 +33,9 @@ public class GoodsController {
     public OrderVo findOrderById(@PathVariable Long id){
         return orderService.findById(id);
     }
+
+    @RequestMapping(value = "/testgw",method = RequestMethod.GET)
+    public String testGw(){
+        return "goods===success";
+    }
 }

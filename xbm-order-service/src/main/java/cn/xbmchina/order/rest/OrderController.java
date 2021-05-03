@@ -42,4 +42,11 @@ public class OrderController {
     public GoodsVo findGoods(@PathVariable Long id){
         return goodsService.findById(id);
     }
+
+
+
+    @RequestMapping(value = "/testgw",method = RequestMethod.GET)
+    public String testGw(){
+        return "order===success";
+    }
 }

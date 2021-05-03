@@ -13,6 +13,7 @@
         <module>xbm-order-service</module>
         <module>xbm-eureka</module>
         <module>xbm-account</module>
+        <module>xbm-gateway</module>
     </modules>
 
     <parent>
@@ -31,12 +32,6 @@
     </properties>
 
     <dependencies>
-        <!--Spring boot Web容器-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <!--Spring boot 测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
