@@ -5,6 +5,14 @@ spring:
   application:
     name: service-gateway
   cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:9999
+      scg:
+        fallback:
+          mode: response
+          response-status: 426
+          response-body: error request
     nacos:
       server-addr: 115.159.2.165:8848
       config:

@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: service-goods
+  mvc:
+    servlet:
+      path: /service-goods
   cloud:
     nacos:
       server-addr: 115.159.2.165:8848
@@ -23,3 +26,4 @@ spring:
         enabled: true
         heart-beat-interval: 60000
         namespace: xbm-cloud
+

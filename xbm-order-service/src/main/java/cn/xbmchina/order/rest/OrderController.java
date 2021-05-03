@@ -5,11 +5,13 @@ import cn.xbmchina.order.model.vo.GoodsVo;
 import cn.xbmchina.order.service.GoodsService;
 import cn.xbmchina.order.service.OrderService;
 import io.seata.spring.annotation.GlobalTransactional;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
+@Api(value="订单控制类",tags = "订单控制类",description = "订单控制类")
 public class OrderController {
 
     @Autowired

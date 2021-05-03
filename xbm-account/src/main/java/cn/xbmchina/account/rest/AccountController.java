@@ -2,11 +2,13 @@ package cn.xbmchina.account.rest;
 
 import cn.xbmchina.account.model.vo.AccountVo;
 import cn.xbmchina.account.service.AccountService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
+@Api(value="用户控制类",tags = "用户控制类",description = "用户控制类")
 public class AccountController {
 
     @Autowired

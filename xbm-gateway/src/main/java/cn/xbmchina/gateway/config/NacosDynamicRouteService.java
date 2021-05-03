@@ -2,17 +2,14 @@ package cn.xbmchina.gateway.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.nacos.api.NacosFactory;
-import com.alibaba.nacos.api.annotation.NacosInjected;
-import com.alibaba.nacos.api.annotation.NacosProperties;
 import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.annotation.NacosConfigListener;
 import com.alibaba.nacos.api.config.listener.AbstractListener;
-import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
@@ -21,7 +18,6 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +26,11 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class NacosDynamicRouteService implements ApplicationEventPublisherAware {
+public class NacosDynamicRouteService implements ApplicationEventPublisherAware, ApplicationRunner {
 
     private static final String DATA_ID = "router.json";
     private static final String DEFAULT_GROUP = "DEFAULT_GROUP";
+    private static final Integer TIMEOUT = 60000;
     private static final List<String> ROUTE_LIST = new ArrayList<>();
 
     @Autowired
@@ -43,35 +40,40 @@ public class NacosDynamicRouteService implements ApplicationEventPublisherAware 
     @Autowired
     private NacosConfigManager nacosConfigManager;
 
-    @PostConstruct
-    public void onMessage() {
+    public void dynamicRouteByNacosListener() {
         try {
             ConfigService configService = nacosConfigManager.getConfigService();
-            configService.addListener(DATA_ID, DEFAULT_GROUP, new AbstractListener() {
+            String initConfig = configService.getConfigAndSignListener(DATA_ID, DEFAULT_GROUP,
+                    TIMEOUT, new AbstractListener() {
                 @Override
                 public void receiveConfigInfo(String config) {
-                    try {
-                        log.info(config);
-                        clearRoute();
-                        try {
-                            if (StringUtil.isNullOrEmpty(config)) {//配置被删除
-                                return;
-                            }
-                            List<RouteDefinition> gatewayRouteDefinitions = JSONObject.parseArray(config, RouteDefinition.class);
-                            for (RouteDefinition routeDefinition : gatewayRouteDefinitions) {
-                                addRoute(routeDefinition);
-                            }
-                            publish();
-                        } catch (Exception e) {
-                            log.error("receiveConfigInfo error" + e);
-                        }
-                    } catch (Exception e) {
-                        log.error("dynamicRouteByNacosListener error" + e);
-                    }
+                    refreshRouter(config);
                 }
             });
+            refreshRouter(initConfig);
         } catch (NacosException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void refreshRouter(String config) {
+        try {
+            log.info("config="+config);
+            clearRoute();
+            try {
+                if (StringUtil.isNullOrEmpty(config)) {//配置被删除
+                    return;
+                }
+                List<RouteDefinition> gatewayRouteDefinitions = JSONObject.parseArray(config, RouteDefinition.class);
+                for (RouteDefinition routeDefinition : gatewayRouteDefinitions) {
+                    addRoute(routeDefinition);
+                }
+                publish();
+            } catch (Exception e) {
+                log.error("receiveConfigInfo error" + e);
+            }
+        } catch (Exception e) {
+            log.error("dynamicRouteByNacosListener error" + e);
         }
     }
 
@@ -98,5 +100,10 @@ public class NacosDynamicRouteService implements ApplicationEventPublisherAware 
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        dynamicRouteByNacosListener();
     }
 }

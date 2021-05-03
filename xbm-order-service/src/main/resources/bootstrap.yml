@@ -1,9 +1,11 @@
 server:
   port: 9002
-
 spring:
   application:
     name: service-order
+  mvc:
+    servlet:
+      path: /service-order
   cloud:
     nacos:
       server-addr: 115.159.2.165:8848
@@ -23,3 +25,4 @@ spring:
         enabled: true
         heart-beat-interval: 60000
         namespace: xbm-cloud
+
