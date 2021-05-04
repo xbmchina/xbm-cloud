@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: service-account
-  mvc:
-    servlet:
-      path: /service-account
   cloud:
     nacos:
       server-addr: 115.159.2.165:8848

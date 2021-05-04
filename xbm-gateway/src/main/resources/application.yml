@@ -14,3 +14,13 @@ spring:
               - DELETE
               - PUT
               - OPTION
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:9008/rsa/publicKey'
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/auth/oauth/token"

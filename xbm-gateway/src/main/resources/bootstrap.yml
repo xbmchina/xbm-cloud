@@ -26,3 +26,8 @@ spring:
         enabled: true
         heart-beat-interval: 60000
         namespace: xbm-cloud
+  redis:
+    host: 115.159.2.165
+    database: 0
+    port: 6379
+    password: xbm@Redis
