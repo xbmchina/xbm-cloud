@@ -7,16 +7,19 @@ feign:
 #      mime-types: text/xml,application/json
   #日志输出
 
-  client:
-    config:
-      service-goods:
-        loggerLevel: FULL
-      defalut:
-        connect-timeout: 60000
-        read-timeout: 60000
+#  client:
+#    config:
+#      service-goods:
+#        loggerLevel: FULL
+#      defalut:
+#        connect-timeout: 60000
+#        read-timeout: 60000
+  httpclient:
+    enabled: true
+    connection-timeout: 60000
+    connection-timer-repeat: 60000
   hystrix:
     enabled: true
-
 
 logging:
   level:
