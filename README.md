@@ -4,6 +4,7 @@
 * [hystrix断路器](hystrix.md)
 * [gateway网关](gateway.md)
 * [sentinel流量控制](sentinel.md)
+* [seata分布式事务](seata.md)
 
 
 
